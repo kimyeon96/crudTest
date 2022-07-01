@@ -2,12 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
-
+<form th:action="@{/crud/delete}" method="post"> <!--폼태그, 액션에다 값을 넘겨줌-->
+    <!--액션에 @골뱅이 쓰는게 thymeleaf문법. 골뱅이쓰고 th 붙임--> <!--thymeleaf가 동적 활동도 지원, 더 자세히는 공식 문서 3.0ver 에서 공부할수 있음-->
+    아이디 : <input type="text" id="userId" name="userId"> <br>
+    <button type="submit">삭제하기</button>
+</form>
 </body>
 </html>

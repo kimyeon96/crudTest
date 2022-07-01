@@ -13,4 +13,7 @@ public class UserDto {
     private String userId;
     private String userPw;
 
+    public UserDto(String userId) {
+        this.userId = userId;
+    }
 }

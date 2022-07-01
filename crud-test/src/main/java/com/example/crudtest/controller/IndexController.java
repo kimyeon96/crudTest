@@ -23,7 +23,7 @@ public class IndexController {
 }
     // 리다이렉트 페이지
     @GetMapping("/redirect")
-    public String redirct() {
+    public String redirect() {
         return "redirect";
     }
 }
