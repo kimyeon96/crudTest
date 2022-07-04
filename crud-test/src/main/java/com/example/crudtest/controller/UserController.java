@@ -115,11 +115,13 @@ public class UserController {
         return "/redirect";
     }
 
+
     @GetMapping("/delete")
     public String deleteUserPage() {
         log.info("### deleteUserPage pass");
         return "/crud/delete";
     }
+
 
     @PostMapping("/delete")
     public String deleteUser(HttpServletRequest request, Model model) throws Exception {
@@ -136,5 +138,8 @@ public class UserController {
 
         log.info("### deleteUser end");
         return "/redirect";
+
+        // redirect로 반환한다 위에 반환값을 String값으로 주겠다. 그래서 쌍따옴표""주는거고
+        // 이렇게 쓰면 redirect페이지로 보냄
     }
 }

@@ -22,6 +22,7 @@ public class UserServiceimpl implements UserService {
     @Override
     public RedirectDto insertUser(UserDto userDto) throws Exception {
         log.info("### insertUser start");
+        //오류를 찾거나 어디서 잘못됐는지 하나하나 찍어주니 알려주는거, 스타트 엔드가 있으니까
         log.info("### userDto 값이 잘 넘어 왔는지 확인 : {}", userDto);
 
         RedirectDto redirectDto = new RedirectDto();
@@ -83,7 +84,7 @@ public class UserServiceimpl implements UserService {
 
     // 유저 비밀번호 변경
     @Override
-    public RedirectDto updateUser(UpdateUserDto updateUserDto) throws Exception {
+    public /*(공개 여부)*/ RedirectDto /*리턴값형태(무슨 형태로 반환할것인가)*/ updateUser /*(변수명/함수명)*/ (UpdateUserDto updateUserDto) /*(파라미터)*/ throws Exception {
         log.info("### updateUser start");
 
         //리턴 타입을 RedirectDto를 맞추기 위해 전역 변수로 인스턴스 생성
@@ -93,6 +94,13 @@ public class UserServiceimpl implements UserService {
 
         // 받아온 updateUserDto 객체를 List<UserDto>에 옮겨준다.
         List<UserDto> updateUserList = updateUserDto.getUpdateUserList();
+
+        if (updateUserList == null) {
+            redirectDto.setMsg("등록된 유저가 없습니다. 유저 등록 후 이용해주세요.");
+            redirectDto.setUrl("/crud/create");
+            return redirectDto;
+        }
+
         log.info("### updateUserList : {}", updateUserList);
 
         // 향상된 for문
@@ -123,19 +131,22 @@ public class UserServiceimpl implements UserService {
         RedirectDto redirectDto = new RedirectDto();
 
         UserDto userDto = new UserDto(userId);
+        // userDto.setUserId(userId);
 
         //존재하는 아이디인지 확인하는 로직
         // 1= 존재, 그 외 오류
         // 아이디가 존재하지 않거나 다수 존재하면 ..
         if (userMapper.checkUserId(userDto) != 1) {
-            redirectDto.setMsg("존재하지 않는 아이디입니다. 존재하는 아이디를 입력해주세요.");
-            redirectDto.setUrl("/crud/delete"); //딜리트 페이지 띄워줌
+            log.info("### 아이디가 존재하지 않거나 다수 존재하는 경우");
+            redirectDto.setMsg("존재하지 않는 아이디입니다. 아이디를 확인 후 이용해주세요.");
+            redirectDto.setUrl("/crud/read");  //딜리트 페이지 띄워줌
             return redirectDto;
         }
 
         // 1 = 삭제 성공, 그 외 실패
         // 삭제 실패했을 경우
         if (userMapper.deleteUser(userDto) != 1) {
+            log.info("### 삭제를 실패한 경우");
             redirectDto.setMsg("삭제 실패 다시 시도해주세요.");
             redirectDto.setUrl("/crud/delete");
             return redirectDto;
@@ -146,6 +157,6 @@ public class UserServiceimpl implements UserService {
         redirectDto.setUrl("/index"); //인덱스 페이지로 바로 띄워주는 로직
 
         log.info("### deleteUser end");
-        return null;
+        return redirectDto;
     }
 }

@@ -35,7 +35,7 @@
     <delete id="deleteUser" parameterType="com.example.crudtest.dto.UserDto">
         DELETE
         FROM USER
-        WEHRE id = #{userId}
+        WHERE id = #{userId}
     </delete>
 
 <!--    비밀번호 변경-->
